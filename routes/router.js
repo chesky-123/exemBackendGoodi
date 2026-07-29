@@ -1,18 +1,10 @@
 import express from 'express';
+import { createRecord } from '../ctrls/mongodbCtrl.js';
 
 export const router = express.Router()
 
 
-router.post("/soldiers/:soldierId/benefits", (req, res) => {
-    try {
-        
-        res.json({})
-    } catch (error) {
-        console.error(e.message);
-        
-        res.json({})
-    }
-});
+router.post("/soldiers/:soldierId/benefits", createRecord);
 
 router.get("/soldiers/:soldierId/benefits", (req, res) => {
     res.json({})
