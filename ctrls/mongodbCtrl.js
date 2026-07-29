@@ -1,5 +1,5 @@
 import { error } from "node:console";
-import { insertRecord } from "../DAL/mongodb.dal.js";
+import { getRecordFromDb, insertRecord } from "../DAL/mongodb.dal.js";
 
 
 
@@ -23,6 +23,18 @@ export async function createRecord(req, res) {
 
         return res.status(201).json(result)
 
+    } catch (e) {
+        console.error(e.message);
+        return res.status(500).json({ error: `server filed` })
+    };
+};
+
+
+export async function getRecordBySOldierId(req, res) {
+    try {
+        const { soldierId } = req.params;
+        const result = await getRecordFromDb(soldierId);
+        res.status(200).json(result);
     } catch (e) {
         console.error(e.message);
         return res.status(500).json({ error: `server filed` })
