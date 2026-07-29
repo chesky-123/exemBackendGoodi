@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { getRecordFromDb, insertRecord } from "../DAL/mongodb.dal.js";
 
 

@@ -14,7 +14,9 @@ export async function insertBuget(newData) {
 
 export async function getBugetByIdFromDb(budgetId) {
     
-    const { data,error} = await sbClient.from('budgets').select().eq('id',budgetId);
+    const { data,error} = await sbClient.from('spend_transaction').select().eq('budgetId',budgetId);
+    console.log('data',data);
+    
     if (error) { return console.error(error.message);}
     return data;
 };
@@ -42,6 +44,10 @@ export async function insertBugetSpend(newData) {
 };
 
 
-export async function name(params) {
+export async function getBudgetFromDb(conditions) {
+    console.log(typeof conditions[0],conditions[1]);
     
+    const {data,error} = await sbClient.from('budgets').select().eq(conditions[0],conditions[1]);
+    if(error) return console.error(error.message);
+    return data[0];
 }
