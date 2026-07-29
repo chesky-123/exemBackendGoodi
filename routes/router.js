@@ -1,6 +1,7 @@
 import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
 import { createBudget, createBudgetSpend, getBugetById } from '../ctrls/supabaseCtrl.js';
+// import { updateTheAllocatedAmount } from '../middlwares/supabase.js';
 
 export const router = express.Router()
 
