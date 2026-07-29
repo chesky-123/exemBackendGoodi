@@ -1,5 +1,6 @@
 import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
+import { createBudget } from '../ctrls/supabaseCtrl.js';
 
 export const router = express.Router()
 
@@ -12,9 +13,7 @@ router.patch("/soldiers/:soldierId/benefits", (req, res) => {
     res.json({})
 });
 
-router.post("/budget", (req, res) => {
-    res.json({})
-});
+router.post("/budget", createBudget);
 
 router.get("/budget", (req, res) => {
     res.json({})
