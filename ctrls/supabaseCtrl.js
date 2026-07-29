@@ -1,4 +1,4 @@
-import { getBugetByIdFromDb, insertBuget } from "../DAL/supabase.dal.js";
+import { getBugetByIdFromDb, insertBuget, insertBugetSpend } from "../DAL/supabase.dal.js";
 
 
 
@@ -24,6 +24,25 @@ export async function getBugetById(req, res) {
         return res.status(500).json({ error: `server filed` })
     };
 };
+
+
+export async function createBudgetSpend(req, res) {
+    try {
+        const {id} = req.params;
+        console.log(id);
+        
+        const body = req.body;
+        body['budgetId'] = id
+        const result = await insertBugetSpend(body);
+        return res.status(201).json(result)
+        console.log(body);
+        
+
+    } catch (e) {
+        console.error(e.message);
+        return res.status(500).json({ error: `server filed` })
+    }
+}
 
 
 

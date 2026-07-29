@@ -1,6 +1,6 @@
 import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
-import { createBudget, getBugetById } from '../ctrls/supabaseCtrl.js';
+import { createBudget, createBudgetSpend, getBugetById } from '../ctrls/supabaseCtrl.js';
 
 export const router = express.Router()
 
@@ -21,9 +21,7 @@ router.get("/budget", (req, res) => {
 
 router.get("/budget/:id/transactions", getBugetById);
 
-router.post("/budget/:id/spend", (req, res) => {
-    res.json({})
-});
+router.post("/budget/:id/spend", createBudgetSpend);
 
 
 
