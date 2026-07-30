@@ -1,4 +1,4 @@
-import { getRecordFromDb, insertRecord } from "../DAL/mongodb.dal.js";
+import { getRecordFromDb, insertRecord, updateBenefitsIntoDB } from "../DAL/mongodb.dal.js";
 
 
 
@@ -34,6 +34,18 @@ export async function getRecordBySOldierId(req, res) {
         const { soldierId } = req.params;
         const result = await getRecordFromDb(soldierId);
         res.status(200).json(result);
+    } catch (e) {
+        console.error(e.message);
+        return res.status(500).json({ error: `server filed` })
+    }
+};
+
+export async function updateBenefits(req, res) {
+    try {
+        const { soldierId } = req.params;
+        const body = req.body;
+        const result = await updateBenefitsIntoDB(soldierId, body);
+        return res.status(200).json(result)
     } catch (e) {
         console.error(e.message);
         return res.status(500).json({ error: `server filed` })
