@@ -1,4 +1,5 @@
 import { getBudgetFromDb, getBugetByIdFromDb, insertBuget, insertBugetSpend, updateAllocatedAmount } from "../DAL/supabase.dal.js";
+import { remainingAmount } from "../middlwares/supabase.js";
 
 
 
@@ -36,7 +37,7 @@ export async function createBudgetSpend(req, res) {
         const allocatedAmount = await updateAllocatedAmount(id, body.amount)
 
         result[0][allocatedAmount]
-        return res.status(201).json(result)
+        return res.status(201).json([result,{'remainingAmount':remainingAmount}])
 
 
     } catch (e) {

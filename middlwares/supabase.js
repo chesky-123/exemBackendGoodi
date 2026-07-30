@@ -59,6 +59,8 @@ export async function isANumber(req, res, next) {
     };
 };
 
+export let remainingAmount;
+
 export async function isdeviationAmount(req, res, next) {
     try {
         const { amount } = req.body;
@@ -68,7 +70,11 @@ export async function isdeviationAmount(req, res, next) {
            
             return acc += curr.allocatedAmount
         }, 0)
-        if(amount >= allocatedAmount) return res.status(409).json({error:'deviation'})
+        remainingAmount = allocatedAmount - amount
+        if(amount >= allocatedAmount) return res.status(409).json({
+            error:'deviation',
+            remainingAmount:amount
+        })
         next()
 
     } catch (e) {
