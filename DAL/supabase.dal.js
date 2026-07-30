@@ -1,4 +1,3 @@
-// import { array } from "node:stream/iter";
 import { sbClient } from "../db/supabaseDb.js";
 
 
@@ -16,8 +15,7 @@ export async function insertBuget(newData) {
 export async function getBugetByIdFromDb(budgetId) {
 
     const { data, error } = await sbClient.from('budgets').select().eq('id', budgetId);
-    // console.log('data'
-    // ,data);
+    
 
     if (error) { return console.error(error.message); }
     return data;
@@ -27,7 +25,6 @@ export async function updateAllocatedAmount(id, amount) {
     const newdata = await getBugetByIdFromDb(id);
 
     newdata[0]['allocatedAmount'] = newdata[0].allocatedAmount - +amount;
-    // console.log(newdata);
 
     const { data, error } = await sbClient.from('budgets').update(newdata).eq("id", id).select();
     if (error) return console.error(error.message);
@@ -75,4 +72,11 @@ export async function getBudgetFromDb(conditions) {
     }
 
     return result;
+};
+
+
+export async function getBudgetSpend() {
+    const {data,error} = await sbClient.from('spend_transaction').select();
+    if (error) return console.error(error.message);
+    return data
 }

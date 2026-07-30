@@ -1,4 +1,4 @@
-import { getBudgetFromDb, getBugetByIdFromDb, insertBuget, insertBugetSpend, updateAllocatedAmount } from "../DAL/supabase.dal.js";
+import { getBudgetFromDb, getBudgetSpend,  getBugetByIdFromDb, insertBuget, insertBugetSpend, updateAllocatedAmount } from "../DAL/supabase.dal.js";
 import { remainingAmount } from "../middlwares/supabase.js";
 
 
@@ -51,22 +51,19 @@ export async function getBudget(req, res) {
     try {
         const conditions = req.query;
         
-        // const conditionsKeys = Object.keys(conditions);
-        // const conditionsValues = Object.values(conditions);
-        // const arrayCondition = Object.entries(conditions)
-        // console.log(arrayCondition[0]);
+        const budgets = await getBudgetFromDb(conditions);
         
-        const budget = await getBudgetFromDb(conditions);
-        
-        // budget.map(async (b) => {
+        const budgetSpend = await getBudgetSpend()
+
+        budgets.map((b) => {
+            b['spentAmount'] =  budgets.reduce((acc,curr) => {
+            const budget = budgetSpend.filter(b => b.budgetId === curr.id)
             
-        //     const a = await getBugetByIdFromDb(b.id)
-            
-        //     const amount = a.amount
-        //     if (!amount) return  b['spentAmount'] = b.allocatedAmount 
-        //     return b['spentAmount'] = b.allocatedAmount - amount
-        // });
-        return res.status(200).json(budget)
+            return acc += budget[0].amount
+        },0) 
+            b['remainingAmount'] = b.spentAmount - b.allocatedAmount
+        })
+        return res.status(200).json(budgets)
 
     } catch (e) {
         console.error(e.message);
