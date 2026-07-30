@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
 import { createBudget, createBudgetSpend, getBudget, getBugetById } from '../ctrls/supabaseCtrl.js';
-import { isId } from '../middlwares/supabase.js';
+import { isId, isValidPOST_Body } from '../middlwares/supabase.js';
 import { isActiveRecord, isNotSctiveRecord } from '../middlwares/mongodb.js';
 // import { updateTheAllocatedAmount } from '../middlwares/supabase.js';
 
@@ -16,7 +16,7 @@ router.patch("/soldiers/:soldierId/benefits", (req, res) => {
     res.json({})
 });
 
-router.post("/budget", createBudget);
+router.post("/budget", isValidPOST_Body,createBudget);
 
 router.get("/budget", getBudget);
 
