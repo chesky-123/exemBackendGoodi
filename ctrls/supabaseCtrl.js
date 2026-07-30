@@ -29,17 +29,14 @@ export async function getBugetById(req, res) {
 export async function createBudgetSpend(req, res) {
     try {
         const { id } = req.params;
-        console.log(id);
 
         const body = req.body;
         body['budgetId'] = id
         const result = await insertBugetSpend(body);
         const allocatedAmount = await updateAllocatedAmount(id, body.amount)
-        console.log(allocatedAmount);
 
         result[0][allocatedAmount]
         return res.status(201).json(result)
-        console.log(body);
 
 
     } catch (e) {
@@ -60,14 +57,14 @@ export async function getBudget(req, res) {
         
         const budget = await getBudgetFromDb(conditions);
         
-        budget.map(async (b) => {
+        // budget.map(async (b) => {
             
-            const a = await getBugetByIdFromDb(b.id)
+        //     const a = await getBugetByIdFromDb(b.id)
             
-            const amount = a.amount
-            if (!amount) return  b['spentAmount'] = b.allocatedAmount 
-            return b['spentAmount'] = b.allocatedAmount - amount
-        });
+        //     const amount = a.amount
+        //     if (!amount) return  b['spentAmount'] = b.allocatedAmount 
+        //     return b['spentAmount'] = b.allocatedAmount - amount
+        // });
         return res.status(200).json(budget)
 
     } catch (e) {

@@ -25,7 +25,6 @@ export async function getBugetByIdFromDb(budgetId) {
 
 export async function updateAllocatedAmount(id, amount) {
     const newdata = await getBugetByIdFromDb(id);
-    console.log(typeof newdata[0].allocatedAmount, typeof amount);
 
     newdata[0]['allocatedAmount'] = newdata[0].allocatedAmount - +amount;
     // console.log(newdata);
