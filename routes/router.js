@@ -2,7 +2,7 @@ import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
 import { createBudget, createBudgetSpend, getBudget, getBugetById } from '../ctrls/supabaseCtrl.js';
 import { isId } from '../middlwares/supabase.js';
-import { isActiveRecord } from '../middlwares/mongodb.js';
+import { isActiveRecord, isNotSctiveRecord } from '../middlwares/mongodb.js';
 // import { updateTheAllocatedAmount } from '../middlwares/supabase.js';
 
 export const router = express.Router()
@@ -10,7 +10,7 @@ export const router = express.Router()
 
 router.post("/soldiers/:soldierId/benefits", isActiveRecord,createRecord);
 
-router.get("/soldiers/:soldierId/benefits", getRecordBySOldierId);
+router.get("/soldiers/:soldierId/benefits", isNotSctiveRecord,getRecordBySOldierId);
 
 router.patch("/soldiers/:soldierId/benefits", (req, res) => {
     res.json({})
