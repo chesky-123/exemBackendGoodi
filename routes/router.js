@@ -2,12 +2,13 @@ import express from 'express';
 import { createRecord, getRecordBySOldierId } from '../ctrls/mongodbCtrl.js';
 import { createBudget, createBudgetSpend, getBudget, getBugetById } from '../ctrls/supabaseCtrl.js';
 import { isId } from '../middlwares/supabase.js';
+import { isActiveRecord } from '../middlwares/mongodb.js';
 // import { updateTheAllocatedAmount } from '../middlwares/supabase.js';
 
 export const router = express.Router()
 
 
-router.post("/soldiers/:soldierId/benefits", createRecord);
+router.post("/soldiers/:soldierId/benefits", isActiveRecord,createRecord);
 
 router.get("/soldiers/:soldierId/benefits", getRecordBySOldierId);
 

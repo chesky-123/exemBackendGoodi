@@ -52,18 +52,20 @@ export async function createBudgetSpend(req, res) {
 export async function getBudget(req, res) {
     try {
         const conditions = req.query;
+        
         // const conditionsKeys = Object.keys(conditions);
         // const conditionsValues = Object.values(conditions);
-        const arrayCondition = Object.entries(conditions)
-        console.log(arrayCondition[0]);
+        // const arrayCondition = Object.entries(conditions)
+        // console.log(arrayCondition[0]);
         
-        const budget = await getBudgetFromDb(arrayCondition[0]);
-        console.log('budget',budget);
+        const budget = await getBudgetFromDb(conditions);
         
         budget.map(async (b) => {
-            const amount = await getBugetByIdFromDb(b.id).amount
-            console.log('amount',amount);
             
+            const a = await getBugetByIdFromDb(b.id)
+            
+            const amount = a.amount
+            if (!amount) return  b['spentAmount'] = b.allocatedAmount 
             return b['spentAmount'] = b.allocatedAmount - amount
         });
         return res.status(200).json(budget)
